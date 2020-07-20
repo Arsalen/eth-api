@@ -1,0 +1,1 @@
+exports.txController = require("./transaction");
