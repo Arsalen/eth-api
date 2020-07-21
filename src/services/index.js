@@ -1,1 +1,1 @@
-exports.txService = require("./transaction");
+exports.txService = require("./transaction.service");

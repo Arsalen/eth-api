@@ -1,1 +1,1 @@
-exports.txController = require("./transaction");
+exports.txController = require("./transaction.controller");

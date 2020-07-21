@@ -1,10 +1,13 @@
 const { txService } = require("../services");
+const { Transaction } = require("../models");
 
 
 
 exports.insert = (req, res) => {
 
-        txService.insert()
+    let transaction = new Transaction(req.body);
+
+        txService.insert(transaction)
             .then(onfulfilled => {
                 
                 res.status(200).json(onfulfilled);
@@ -17,7 +20,9 @@ exports.insert = (req, res) => {
 
 exports.select = (req, res) => {
 
-        txService.select()
+    let transaction = new Transaction(req.body);
+
+        txService.select(transaction)
             .then(onfulfilled => {
                 
                 res.status(200).json(onfulfilled);
