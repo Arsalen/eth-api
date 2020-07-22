@@ -1,4 +1,4 @@
-const { txService } = require("../services");
+const { pairService } = require("../services");
 const { Transaction } = require("../models");
 
 const wrapper = require("../wrapper");
@@ -8,7 +8,7 @@ exports.insert = (req, res) => {
 
     let transaction = new Transaction(req.body);
 
-        txService.insert(transaction)
+        pairService.insert(transaction)
             .then(onfulfilled => {
 console.log("SUCCESS: ", onfulfilled)
 
@@ -30,7 +30,7 @@ exports.select = (req, res) => {
 
             let cb = onfulfilled;
 
-            txService.select(cb)
+            pairService.select(cb)
                 .then(response => {
                 
                     res.status(200).json(response);
@@ -57,7 +57,7 @@ exports.authorize = (req, res) => {
 
             let transaction = onfulfilled;
 
-            txService.authorize(transaction)
+            pairService.authorize(transaction)
                 .then(response => {
                 
                     res.status(200).json(response);
