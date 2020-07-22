@@ -1,0 +1,1 @@
+exports.ForexContract = require("./forex.contract");

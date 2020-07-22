@@ -3,8 +3,8 @@ const router = express.Router();
 
 const settings = require("../settings");
 
-const txRouter = require("./transaction");
+const txRouter = require("./transaction.route");
 
-router.use(settings.Urls.root_tx, txRouter);
+router.use(settings.Urls.root, txRouter);
 
 module.exports = router;

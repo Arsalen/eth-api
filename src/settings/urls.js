@@ -1,5 +1,6 @@
 module.exports = {
-    root_tx: "/transactions",
-    insert_tx: "/",
-    select_tx: "/:id",
+    root: "/pairs",
+    insert: "/",
+    select: "/:name",
+    authorize: "/register",
 }

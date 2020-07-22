@@ -1,2 +1,4 @@
 exports.Transaction = require("./transaction");
-exports.Acknowledgement = require("./acknowledgement");
+exports.Receipt = require("./receipt");
+exports.Message = require("./message");
+exports.Pair = require("./pair");

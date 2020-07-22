@@ -5,7 +5,9 @@ const settings = require("../settings");
 
 const { txController } = require("../controllers");
 
-router.post(settings.Urls.insert_tx, txController.insert);
-router.get(settings.Urls.select_tx, txController.select);
+router.post(settings.Urls.insert, txController.insert);
+router.get(settings.Urls.select, txController.select);
+
+router.post(settings.Urls.authorize, txController.authorize);
 
 module.exports = router;
