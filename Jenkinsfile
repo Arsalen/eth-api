@@ -18,16 +18,16 @@ pipeline {
 
                 withCredentials([
                     file (credentialsId: "env", variable: "environment"),
-                    file (credentialsId: "pm2", variable: "daemon")
+                    file (credentialsId: "pm2", variable: "process")
                     file (credentialsId: "config", variable: "configuration"),
                     file (credentialsId: "key", variable: "keystore"),
-                    file (credentialsId: "frx", variable: "Forex"),
+                    file (credentialsId: "dapp", variable: "forex"),
                 ]) {
                     sh "cp \$environment .env"
-                    sh "cp \$daemon daemon.js"
+                    sh "cp \$process app.process.js"
                     sh "cp \$configuration config/app.config.json"
                     sh "cp \$keystore config/key.store.json"
-                    sh "cp \$Forex artifacts/Forex.json"
+                    sh "cp \$forex artifacts/Forex.json"
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
             }
             steps {
 
-                sh "pm2 start daemon.json"
+                sh "pm2 start app.process.js"
             }
         }
     }
