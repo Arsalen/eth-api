@@ -42,6 +42,8 @@ pipeline {
 
             steps {
 
+                sh "echo $BUILD_USER_ID"
+
                 sh "npm i --save"
             }
         }
