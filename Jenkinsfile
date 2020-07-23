@@ -6,7 +6,7 @@ pipeline {
 
         choice (
 
-            name: "START", choices: ["NO", "YES"], description: "To run or not to run"
+            name: "START", choices: ["NO", "YES"], description: "To start or not to start"
         )
     }
 
@@ -42,6 +42,8 @@ pipeline {
 
             steps {
                 
+                echo "Running $USER"
+
                 sh "npm i --save"
             }
         }
