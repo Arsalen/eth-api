@@ -16,7 +16,7 @@ pipeline {
 
             when {
                 expression {
-                    !fielExists("environment") && !fielExists("app.process.js") && !fielExists("config/app.config.json") && !fielExists("key.store.json") && !fielExists("artifacts/Forex.json")
+                    !fileExists("environment") && !fileExists("app.process.js") && !fileExists("config/app.config.json") && !fileExists("key.store.json") && !fileExists("artifacts/Forex.json")
                 }
             }
 
