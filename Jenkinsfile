@@ -18,7 +18,7 @@ pipeline {
 
                 withCredentials([
                     file (credentialsId: "env", variable: "environment"),
-                    file (credentialsId: "pm2", variable: "process")
+                    file (credentialsId: "pm2", variable: "process"),
                     file (credentialsId: "config", variable: "configuration"),
                     file (credentialsId: "key", variable: "keystore"),
                     file (credentialsId: "dapp", variable: "forex"),
