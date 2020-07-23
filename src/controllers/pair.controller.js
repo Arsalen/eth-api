@@ -5,9 +5,9 @@ const wrapper = require("../wrapper");
 
 exports.insert = (req, res) => {
 
-    let tx = req.body;
+    let transaction = req.body;
 
-    pairService.insert(tx)
+    pairService.insert(transaction)
         .then(onfulfilled => {
 
             res.status(200).json(onfulfilled);
@@ -50,9 +50,7 @@ exports.authorize = (req, res) => {
     wrapper.forexContract.authorize(user)
         .then(onfulfilled => {
 
-            let tx = onfulfilled;
-
-            pairService.authorize(tx)
+            pairService.authorize(onfulfilled)
                 .then(response => {
                 
                     res.status(200).json(response);

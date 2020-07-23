@@ -1,4 +1,4 @@
-const { Pair } = require("../models");
+const { Pair, Receipt } = require("../models");
 
 const { ethereum } = require("../helpers");
 
@@ -10,7 +10,9 @@ exports.insert = (transaction) => {
         ethereum.send(transaction)
             .then(onfulfilled => {
 
-                resolve(onfulfilled);
+                let receipt = new Receipt(onfulfilled);
+
+                resolve(receipt);
             })
             .catch(onrejected => {
 
@@ -47,7 +49,9 @@ exports.authorize = (transaction) => {
         ethereum.send(transaction)
             .then(onfulfilled => {
 
-                resolve(onfulfilled);
+                let receipt = new Receipt(onfulfilled);
+
+                resolve(receipt);
             })
             .catch(onrejected => {
 

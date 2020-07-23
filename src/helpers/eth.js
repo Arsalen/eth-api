@@ -33,8 +33,8 @@ class Ethereum {
             account.signTransaction(message)
                 .then(res => {
 
-                    let tx = new Transaction(res);
-                    resolve(tx);
+                    let transaction = new Transaction(res);
+                    resolve(transaction);
                 })
                 .catch(err => {
 
@@ -43,11 +43,11 @@ class Ethereum {
         })
     }
 
-    send(_tx) {
+    send(_transaction) {
 
-        let tx = new Transaction(_tx);
+        let transaction = new Transaction(_transaction);
         
-        let raw = tx.rawTransaction;
+        let raw = transaction.rawTransaction;
 
         return new Promise((resolve, reject) => {
 
