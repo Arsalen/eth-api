@@ -45,11 +45,13 @@ class Ethereum {
 
     send(_tx) {
 
-        let tx = _tx.rawTransaction;
+        let tx = new Transaction(_tx);
         
+        let raw = tx.rawTransaction;
+
         return new Promise((resolve, reject) => {
 
-            this.web3.eth.sendSignedTransaction(tx)
+            this.web3.eth.sendSignedTransaction(raw)
                 .then(res => {
 
                     let receipt = new Receipt(res);

@@ -1,24 +1,21 @@
 const { pairService } = require("../services");
-const { Transaction } = require("../models");
 
 const wrapper = require("../wrapper");
 
 
 exports.insert = (req, res) => {
 
-    let transaction = new Transaction(req.body);
+    let tx = req.body;
 
-        pairService.insert(transaction)
-            .then(onfulfilled => {
-console.log("SUCCESS: ", onfulfilled)
+    pairService.insert(tx)
+        .then(onfulfilled => {
 
-                res.status(200).json(onfulfilled);
-            })
-            .catch(onrejected => {
-console.log("ERROR: ", onrejected)
+            res.status(200).json(onfulfilled);
+        })
+        .catch(onrejected => {
 
-                res.status(400).json(onrejected);
-            })
+            res.status(400).json(onrejected);
+        })
 }
 
 exports.select = (req, res) => {
@@ -28,9 +25,7 @@ exports.select = (req, res) => {
     wrapper.forexContract.get(name)
         .then(onfulfilled => {
 
-            let cb = onfulfilled;
-
-            pairService.select(cb)
+            pairService.select(onfulfilled)
                 .then(response => {
                 
                     res.status(200).json(response);
@@ -55,9 +50,9 @@ exports.authorize = (req, res) => {
     wrapper.forexContract.authorize(user)
         .then(onfulfilled => {
 
-            let transaction = onfulfilled;
+            let tx = onfulfilled;
 
-            pairService.authorize(transaction)
+            pairService.authorize(tx)
                 .then(response => {
                 
                     res.status(200).json(response);

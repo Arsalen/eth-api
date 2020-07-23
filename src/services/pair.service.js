@@ -1,4 +1,4 @@
-const { Receipt, Pair } = require("../models");
+const { Pair } = require("../models");
 
 const { ethereum } = require("../helpers");
 
@@ -10,19 +10,11 @@ exports.insert = (transaction) => {
         ethereum.send(transaction)
             .then(onfulfilled => {
 
-                let result = onfulfilled;
-
-                let receipt = new Receipt(result);
-
-                resolve(receipt);
+                resolve(onfulfilled);
             })
             .catch(onrejected => {
 
-                let result = onrejected;
-
-                let receipt = new Receipt(result);
-
-                reject(receipt);
+                reject(onrejected);
             })
     })
 }
@@ -34,20 +26,16 @@ exports.select = (cb) => {
         cb()
             .then(onfulfilled => {
 
-                let result = onfulfilled;
-
                 let pair = new Pair({
-                    rate: result.rate,
-                    timestamp: result.timestamp
+                    rate: onfulfilled.rate,
+                    timestamp: onfulfilled.timestamp
                 });
 
                 resolve(pair);
             })
             .catch(onrejected => {
 
-                let result = onrejected;
-
-                reject(result);
+                reject(onrejected);
             })
     })
 }
@@ -59,19 +47,11 @@ exports.authorize = (transaction) => {
         ethereum.send(transaction)
             .then(onfulfilled => {
 
-                let result = onfulfilled;
-
-                let receipt = new Receipt(result);
-
-                resolve(receipt);
+                resolve(onfulfilled);
             })
             .catch(onrejected => {
 
-                let result = onrejected;
-
-                let receipt = new Receipt(result);
-
-                reject(receipt);
+                reject(onrejected);
             })
     })
 }

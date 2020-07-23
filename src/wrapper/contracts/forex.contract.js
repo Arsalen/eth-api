@@ -27,7 +27,7 @@ class ForexContract {
         const network = this.descriptor.network;
         const gasLimit = this.descriptor.gasLimit;
 
-        let meta = {
+        let message = {
             to: address,
             data: callData,
             chainId: network,
@@ -36,7 +36,7 @@ class ForexContract {
 
         return new Promise((resolve, reject) => {
 
-            this.provider.sign(meta)
+            this.provider.sign(message)
                 .then(onfulfilled => {
                     
                     resolve(onfulfilled);
