@@ -42,8 +42,8 @@ pipeline {
 
             steps {
 
-                sh "echo $BUILD_USER_ID"
-
+                echo "Running ${env.BUILD_USER_ID}"
+                
                 sh "npm i --save"
             }
         }
