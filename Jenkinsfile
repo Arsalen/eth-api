@@ -6,7 +6,7 @@ pipeline {
 
         choice (
 
-            name: "START", choices: ["YES", "NO"], description: "To run or not to run"
+            name: "START", choices: ["NO", "YES"], description: "To run or not to run"
         )
     }
 
@@ -43,7 +43,7 @@ pipeline {
         stage("RUN") {
             
             when {
-                expression { params.START == "yes" }
+                expression { params.START == "YES" }
             }
             steps {
 
