@@ -14,6 +14,12 @@ pipeline {
 
         stage("SETUP") {
 
+            when {
+                expression {
+                    !fielExists("environment") && !fielExists("app.process.js") && !fielExists("config/app.config.json") && !fielExists("key.store.json") && !fielExists("artifacts/Forex.json")
+                }
+            }
+
             steps {
 
                 withCredentials([
