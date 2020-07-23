@@ -41,8 +41,6 @@ pipeline {
         stage("BUILD") {
 
             steps {
-                
-                echo "Running $USER"
 
                 sh "npm i --save"
             }
