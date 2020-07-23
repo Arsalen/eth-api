@@ -4,3 +4,4 @@ package-lock.json
 config/*.json
 logs/*.log
 artifacts/*.json
+daemon.js

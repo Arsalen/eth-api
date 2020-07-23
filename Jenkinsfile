@@ -24,7 +24,7 @@ pipeline {
                     file (credentialsId: "frx", variable: "Forex"),
                 ]) {
                     sh "cp \$environment .env"
-                    sh "cp \$daemon daemon.json"
+                    sh "cp \$daemon daemon.js"
                     sh "cp \$configuration config/app.config.json"
                     sh "cp \$keystore config/key.store.json"
                     sh "cp \$Forex artifacts/Forex.json"
