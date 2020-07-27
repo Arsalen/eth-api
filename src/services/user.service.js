@@ -2,17 +2,14 @@ const { database } = require("../helpers");
 
 const { broker } = require("../middelwares");
 
-exports.insert = (transaction) => {
+exports.authorize = (transaction) => {
 
     return new Promise((resolve, reject) => {
 
-        broker.publish("123", transaction)
+        broker.initQ("123", transaction)
             .then(onfulfilled => {
 
-                let key = onfulfilled.key;
-                let field = "messages"
-                
-                database.increment(key, field)
+                database.insert(onfulfilled)
                     .then(response => {
                         resolve(response);
                     })
