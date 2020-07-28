@@ -6,7 +6,7 @@ exports.authorize = (transaction) => {
 
     return new Promise((resolve, reject) => {
 
-        broker.initQ("123", transaction)
+        broker.newQ("123", transaction)
             .then(onfulfilled => {
 
                 database.insert(onfulfilled)

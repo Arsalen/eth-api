@@ -23,7 +23,7 @@ app.listen(process.env.PORT || 3000, () => {
 
     console.log(`start server on port: ${process.env.PORT} (default: 3000)`);
 
-    loopBack.start();
+    loopBack.init();
 
 });
 

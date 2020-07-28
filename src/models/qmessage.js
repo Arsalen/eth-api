@@ -2,9 +2,8 @@ class QMessage {
 
     constructor(props) {
         
-        this.key = props.key;
-        this.exchange = props.exchange;
-        this.data = props.data;
+        this.content = props.content;
+        this.bind = props.bind;
     }
 }
 

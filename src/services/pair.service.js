@@ -6,13 +6,10 @@ exports.insert = (transaction) => {
 
     return new Promise((resolve, reject) => {
 
-        broker.publish("123", transaction)
+        broker.newMsg("123", transaction)
             .then(onfulfilled => {
 
-                let key = onfulfilled.key;
-                let field = "messages"
-                
-                database.increment(key, field)
+                database.insert(onfulfilled)
                     .then(response => {
                         resolve(response);
                     })

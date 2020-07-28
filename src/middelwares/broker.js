@@ -1,11 +1,15 @@
+const EE = require("events").EventEmitter;
+
 const config = require("../../config/app.config");
 const amqp = require("amqplib/callback_api");
 
 const { Queue, QMessage } = require("../models")
 
-class Broker {
+class Broker extends EE {
 
     constructor(type) {
+
+        super();
 
         const self = this;
 
@@ -55,16 +59,10 @@ class Broker {
 
             let ok = self.channel.publish(process.env.EXCHANGE, key, buffer);
 
-            let message = new QMessage({
-                key: key,
-                exchange: process.env.EXCHANGE,
-                data: data
-            })
-
             if(ok)
-                resolve(message);
+                resolve(true);
 
-            reject(message)
+            reject(false);
         })
     }
 
@@ -72,23 +70,41 @@ class Broker {
 
         const self = this;
 
-        return new Promise((resolve, reject) => {
+        self.channel.consume(q, function(buffer) {
 
-            self.channel.consume(q, function(message) {
+            let message = JSON.parse(buffer.content);
 
-                let data = JSON.parse(message.content);
+            self.emit(process.env.EVENT, message, q);
 
-                if(data)
-                    resolve(data);
-
-                reject(null);
-            }, {
-                noAck: true
-            })
+        }, {
+            noAck: true
         })
     }
 
-    initQ(key, transaction) {
+    newMsg(key, transaction) {
+
+        const self = this;
+
+        return new Promise((resolve, reject) => {
+
+            let message = new QMessage({
+                content: transaction,
+                bind: key
+            })
+
+            self.publish(key, transaction)
+                .then(onfulfilled => {
+
+                    resolve(message, onfulfilled);
+                })
+                .catch(onrejected => {
+
+                    reject(message, onrejected)
+                })
+        })
+    }
+
+    newQ(key, transaction) {
         
         const self = this;
 
@@ -106,24 +122,27 @@ class Broker {
                     if(binderror)
                         reject(binderror);
 
-                    let buffer = Buffer.from(JSON.stringify(transaction));
-
-                    self.channel.publish(process.env.EXCHANGE, key, buffer);
-
                     let queue = new Queue({
                         name: q.queue,
-                        messages: q.messageCount,
-                        consumers: q.consumerCount,
                         bind: key
                     })
 
-                    resolve(queue);
+                    self.publish(key, transaction)
+                        .then(onfulfilled => {
+
+                            setTimeout(() => {
+                                self.subscribe(queue.name);
+                            }, 5000);
+                            resolve(queue, onfulfilled);
+                        })
+                        .catch(onrejected => {
+
+                            reject(queue, onrejected)
+                        })
                 })
             })
         })
     }
 }
 
-const type = "direct";
-
-module.exports = new Broker(type);
+module.exports = new Broker(process.env.TYPE);

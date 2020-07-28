@@ -4,7 +4,7 @@ class DataBase {
     
     constructor() {
         
-        this.nedb = new NeDB({ filename: `./db/queues.db`, autoload: true });
+        this.nedb = new NeDB({ filename: `./db/forex.db`, autoload: true });
     }
 
     insert(data) {
@@ -14,8 +14,7 @@ class DataBase {
             this.nedb.insert(data, (onrejected, onfulfilled) => {
 
                 if(onfulfilled) {
-
-                    this.nedb.emit(process.env.NEW_Q, onfulfilled);
+                    
                     resolve(onfulfilled);
                 } else {
 
@@ -24,36 +23,50 @@ class DataBase {
             });
         })
     }
-
-    increment(key, field) {
-        
-        return new Promise((resolve, reject) => {
-
-            this.nedb.update({ bind: key }, { $inc: { [field]: 1 } }, { returnUpdatedDocs: true }, (onrejected, onfulfilled, doc) => {
-
-                if(onfulfilled) {
-
-                    this.nedb.emit(process.env.NEW_MSG_Q, doc);
-                    resolve(doc);
-                } else {
-
-                    reject(onrejected);
-                }
-            })
-        })
-    }
-    
-    listen(event) {
-
-        return new Promise((resolve, reject) => {
-
-            this.nedb.on(event, (data) => {
-
-                if(data)
-                    resolve(data);
-            })
-        })
-    }
 }
 
 module.exports = new DataBase();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// increment(key, field) {
+        
+//     return new Promise((resolve, reject) => {
+
+//         this.nedb.update({ bind: key }, { $inc: { [field]: 1 } }, { returnUpdatedDocs: true }, (onrejected, onfulfilled, doc) => {
+
+//             if(onfulfilled) {
+
+//                 this.nedb.emit(process.env.NEW_MSG_Q, doc);
+//                 resolve(doc);
+//             } else {
+
+//                 reject(onrejected);
+//             }
+//         })
+//     })
+// }
+
+// listen(event) {
+
+//     return new Promise((resolve, reject) => {
+
+//         this.nedb.on(event, (data) => {
+
+//             if(data)
+//                 resolve(data);
+//         })
+//     })
+// }
