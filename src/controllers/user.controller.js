@@ -4,6 +4,34 @@ const { userService } = require("../services");
 
 const wrapper = require("../wrapper");
 
+exports.authenticate = (req, res, next) => {
+
+    let base64Credentials =  req.headers.authorization.split(' ')[1];
+    let credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
+    let [username, password] = credentials.split(':');
+
+    let user = new User({
+        username: username,
+        password: password
+    })
+
+    userService.authenticate(user)
+        .then(response => {
+
+            if(response.length) {
+                
+                req.user = response[0];
+                next();
+            } else {
+                
+                res.status(400).json({ result: { status: false, description: `Wrong password or username` }, timestamp: new Date() });
+            }
+        })
+        .catch(error => {
+                
+            res.status(400).json({ result: { status: false, description: `Failed to authenticate, due to ${error}` }, timestamp: new Date() });
+        })
+}
 
 exports.authorize = (req, res) => {
 

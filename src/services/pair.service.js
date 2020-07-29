@@ -2,11 +2,13 @@ const { database } = require("../helpers");
 
 const { broker } = require("../middelwares");
 
-exports.insert = (transaction) => {
+exports.insert = (key, transaction) => {
+
+    // console.log(key, transaction)
 
     return new Promise((resolve, reject) => {
 
-        broker.newMsg("123", transaction)
+        broker.newMsg(key, transaction)
             .then(onfulfilled => {
 
                 database.insert(onfulfilled)

@@ -1,10 +1,15 @@
+const { Transaction, User } = require("../models");
+
 const { pairService } = require("../services");
 
 exports.insert = (req, res) => {
     
-    let transaction = req.body;
+    let user = new User(req.user);
 
-    pairService.insert(transaction)
+    let transaction = new Transaction(req.body);
+
+
+    pairService.insert(user.key, transaction)
         .then(onfulfilled => {
 
             res.status(200).json({ result: { status: true, description: `Successfully submitted message, bound to ${JSON.stringify(onfulfilled)}` }, timestamp: new Date() });

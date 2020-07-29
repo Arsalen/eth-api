@@ -23,6 +23,23 @@ class DataBase {
             });
         })
     }
+
+    find(data) {
+
+        return new Promise((resolve, reject) => {
+
+            this.nedb.find(data, (onrejected, onfulfilled) => {
+
+                if(onfulfilled) {
+
+                    resolve(onfulfilled);
+                } else {
+
+                    reject(onrejected);
+                }
+            });
+        })
+    }
 }
 
 module.exports = new DataBase();
