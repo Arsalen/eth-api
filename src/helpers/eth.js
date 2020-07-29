@@ -4,7 +4,7 @@ const Web3 = require("web3");
 const config = require("../../config/app.config");
 const keystore = require("../../config/key.store");
 
-const { Transaction, Receipt, EthMessage } = require("../models");
+const { Transaction, Receipt, Blob } = require("../models");
 
 class Ethereum {
 
@@ -14,21 +14,21 @@ class Ethereum {
         this.web3 = new Web3(this.hd);
     }
     
-    sign(_message) {
+    sign(message) {
 
         let account = this.web3.eth.accounts.decrypt(keystore, process.env.PASSWORD);
         
-        let message = new EthMessage({
+        let blob = new Blob({
             from: account.address,
-            to: _message.to,
-            data: _message.data,
-            chainId: _message.chainId,
-            gas: _message.gas,
+            to: message.to,
+            data: message.data,
+            chainId: message.chainId,
+            gas: message.gas,
         })
 
         return new Promise((resolve, reject) => {
 
-            account.signTransaction(message)
+            account.signTransaction(blob)
                 .then(res => {
 
                     let transaction = new Transaction(res);
@@ -41,9 +41,9 @@ class Ethereum {
         })
     }
 
-    send(_transaction) {
+    send(tx) {
 
-        let transaction = new Transaction(_transaction);
+        let transaction = new Transaction(tx);
         
         let raw = transaction.rawTransaction;
 

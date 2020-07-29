@@ -3,7 +3,7 @@ const EE = require("events").EventEmitter;
 const config = require("../../config/app.config");
 const amqp = require("amqplib/callback_api");
 
-const { Queue, QMessage } = require("../models")
+const { Queue, Message } = require("../models")
 
 class Broker extends EE {
 
@@ -66,33 +66,33 @@ class Broker extends EE {
         })
     }
 
-    subscribe(q) {
+    subscribe(queue) {
 
         const self = this;
 
-        self.channel.consume(q, function(buffer) {
+        self.channel.consume(queue, function(buffer) {
 
             let message = JSON.parse(buffer.content);
 
-            self.emit(process.env.EVENT, message, q);
+            self.emit(process.env.EVENT, message, queue);
 
         }, {
             noAck: true
         })
     }
 
-    newMsg(key, transaction) {
+    newMsg(key, data) {
 
         const self = this;
 
         return new Promise((resolve, reject) => {
 
-            let message = new QMessage({
-                content: transaction,
+            let message = new Message({
+                content: data,
                 bind: key
             })
 
-            self.publish(key, transaction)
+            self.publish(key, data)
                 .then(onfulfilled => {
 
                     resolve(message, onfulfilled);
@@ -104,7 +104,7 @@ class Broker extends EE {
         })
     }
 
-    newQ(key, transaction) {
+    newQ(key, data) {
         
         const self = this;
 
@@ -127,7 +127,7 @@ class Broker extends EE {
                         bind: key
                     })
 
-                    self.publish(key, transaction)
+                    self.publish(key, data)
                         .then(onfulfilled => {
 
                             setTimeout(() => {

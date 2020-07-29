@@ -1,15 +1,21 @@
+const cuid = require("cuid");
+
 const { database } = require("../helpers");
 
 const { broker } = require("../middelwares");
 
-exports.authorize = (transaction) => {
+exports.authorize = (user) => {
 
     return new Promise((resolve, reject) => {
 
-        broker.newQ("123", transaction)
+        user.key = cuid();
+
+        broker.newQ(user.key, user.tx)
             .then(onfulfilled => {
 
-                database.insert(onfulfilled)
+                user.q = onfulfilled;
+
+                database.insert(user)
                     .then(response => {
                         resolve(response);
                     })

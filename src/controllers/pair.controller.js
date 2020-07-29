@@ -7,10 +7,10 @@ exports.insert = (req, res) => {
     pairService.insert(transaction)
         .then(onfulfilled => {
 
-            res.status(200).json({ result: { status: true, description: `Successfully submitted message, bound to ${JSON.stringify(onfulfilled.bind)}` }, timestamp: new Date() });
+            res.status(200).json({ result: { status: true, description: `Successfully submitted message, bound to ${JSON.stringify(onfulfilled)}` }, timestamp: new Date() });
         })
         .catch(onrejected => {
 
-            res.status(400).json({ result: { status: false, description: `Failed because of ${JSON.stringify(onrejected)}` }, timestamp: new Date() });
+            res.status(400).json({ result: { status: false, description: `Failed to submit message, due to ${JSON.stringify(onrejected)}` }, timestamp: new Date() });
         })
 }

@@ -8,21 +8,11 @@ class ForexContract {
         this.instance = new provider.web3.eth.Contract(descriptor.abi, descriptor.address);
     }
 
-    get(_name) {
-        
-        return new Promise((resolve, reject) => {
+    authorize(user) {
 
-            let cb = this.instance.methods.get(_name).call;
+        let checksum = this.provider.web3.utils.toChecksumAddress(user);
 
-            resolve(cb);
-        })
-    }
-
-    authorize(_user) {
-
-        let user = this.provider.web3.utils.toChecksumAddress(_user);
-
-        const callData = this.instance.methods.authorize(user).encodeABI();
+        const callData = this.instance.methods.authorize(checksum).encodeABI();
         const address = this.instance.options.address;
         const network = this.descriptor.network;
         const gasLimit = this.descriptor.gasLimit;

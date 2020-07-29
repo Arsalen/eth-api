@@ -1,4 +1,4 @@
-class EthMessage {
+class Blob {
 
     constructor(props) {
         
@@ -9,4 +9,4 @@ class EthMessage {
     }
 }
 
-module.exports = EthMessage;
+module.exports = Blob;

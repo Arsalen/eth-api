@@ -4,7 +4,7 @@ class DataBase {
     
     constructor() {
         
-        this.nedb = new NeDB({ filename: `./db/forex.db`, autoload: true });
+        this.nedb = new NeDB({ filename: `./db/application.db`, autoload: true });
     }
 
     insert(data) {
@@ -14,7 +14,7 @@ class DataBase {
             this.nedb.insert(data, (onrejected, onfulfilled) => {
 
                 if(onfulfilled) {
-                    
+
                     resolve(onfulfilled);
                 } else {
 

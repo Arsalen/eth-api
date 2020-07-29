@@ -1,4 +1,4 @@
-class QMessage {
+class Message {
 
     constructor(props) {
         
@@ -7,4 +7,4 @@ class QMessage {
     }
 }
 
-module.exports = QMessage;
+module.exports = Message;

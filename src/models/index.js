@@ -1,6 +1,7 @@
 exports.Transaction = require("./transaction");
 exports.Receipt = require("./receipt");
-exports.EthMessage = require("./ethmessage");
+exports.Blob = require("./blob");
 exports.Pair = require("./pair");
 exports.Queue = require("./queue");
-exports.QMessage = require("./qmessage");
+exports.Message = require("./message");
+exports.User = require("./user");
