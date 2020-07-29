@@ -23,13 +23,13 @@ exports.authenticate = (req, res, next) => {
                 req.user = response[0];
                 next();
             } else {
-                
+
                 res.status(400).json({ result: { status: false, description: `Wrong password or username` }, timestamp: new Date() });
             }
         })
         .catch(error => {
                 
-            res.status(400).json({ result: { status: false, description: `Failed to authenticate, due to ${error}` }, timestamp: new Date() });
+            res.status(400).json({ result: { status: false, description: `Failed to authenticate, due to ${JSON.stringify(error)}` }, timestamp: new Date() });
         })
 }
 

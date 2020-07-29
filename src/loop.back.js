@@ -1,19 +1,33 @@
+const Stream = require("stream");
+
 const { ethereum, database } = require("./helpers");
 
 const { broker } = require("./middelwares");
 
-class LoopBack {
+class LoopBack extends Stream.Writable {
 
     constructor() {
 
+        super();
     }
 
     init() {
+        
+        broker.pipe(this);
+    }
 
-        broker.on(process.env.EVENT, (message, queue) => {
+    _write(data, encoding, cb) {
 
-            console.log("[x] received %s from %s", JSON.stringify(message), queue, "\n");
-        })
+        console.log("WRITE");
+
+        let message = data.toString()
+
+        setTimeout(() => {
+
+            console.log("[x] received %s", message, "\n");
+            
+            cb();
+        }, 5000);
     }
 }
 

@@ -1,11 +1,11 @@
-const EE = require("events").EventEmitter;
+const Stream = require("stream");
 
 const config = require("../../config/app.config");
 const amqp = require("amqplib/callback_api");
 
 const { Queue, Message } = require("../models")
 
-class Broker extends EE {
+class Broker extends Stream.Readable {
 
     constructor(type) {
 
@@ -66,20 +66,49 @@ class Broker extends EE {
         })
     }
 
+    _read(size) {
+
+        console.log("READ");
+
+        // this.on("end", () => {
+
+        //     console.log("end");
+            
+        //     this.push(null);
+        // })
+    }
+
     subscribe(queue) {
 
         const self = this;
 
-        self.channel.consume(queue, function(buffer) {
+        self.channel.consume(queue, function(data) {
 
-            let message = JSON.parse(buffer.content);
+            console.log("CONSUMED");
 
-            self.emit(process.env.EVENT, message, queue);
+            let buffer = Buffer.from(data.content)
+
+            self.push(buffer);
 
         }, {
             noAck: true
         })
     }
+
+    // subscribe(queue) {
+
+    //     const self = this;
+
+    //     self.channel.consume(queue, function(buffer) {
+
+    //         let message = JSON.parse(buffer.content);
+
+    //         self.emit(process.env.EVENT, message, queue);
+
+    //     }, {
+    //         noAck: true
+    //     })
+    // }
 
     newMsg(key, data) {
 
