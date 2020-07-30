@@ -64,7 +64,7 @@ class Ethereum {
     }
 }
 
-const endPoint = `${config.infuraEndPoint}${process.env.INFURA_API_KEY}`;
+const endPoint = `${config.infura.endPoint}${config.infura.key}`;
 const mnemonic = process.env.MNEMONIC.trim();
 
 module.exports = new Ethereum(endPoint, mnemonic);;

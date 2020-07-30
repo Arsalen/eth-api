@@ -16,7 +16,7 @@ class Broker extends Stream.Readable {
         this.start()
             .then(onfulfilled => {
 
-                    onfulfilled.assertExchange(process.env.EXCHANGE, type, {
+                    onfulfilled.assertExchange(config.broker.exchange, type, {
                         durable: true
                     }, function(error, success) {
 
@@ -32,7 +32,7 @@ class Broker extends Stream.Readable {
 
         return new Promise((resolve, reject) => {
 
-            amqp.connect(config.brokerEndPoint, function(connectionerror, connection) {
+            amqp.connect(config.broker.endPoint, function(connectionerror, connection) {
 
                 if(connectionerror)
                     reject(connectionerror);
@@ -49,6 +49,14 @@ class Broker extends Stream.Readable {
         })
     }
 
+    _read(size) {
+
+        // console.log("READ");
+
+        if(!size)
+            this.push(null);
+    }
+
     publish(key, data) {
 
         const self = this;
@@ -57,7 +65,7 @@ class Broker extends Stream.Readable {
 
             let buffer = Buffer.from(JSON.stringify(data));
 
-            let ok = self.channel.publish(process.env.EXCHANGE, key, buffer);
+            let ok = self.channel.publish(config.broker.exchange, key, buffer);
 
             if(ok)
                 resolve(true);
@@ -66,25 +74,11 @@ class Broker extends Stream.Readable {
         })
     }
 
-    _read(size) {
-
-        console.log("READ");
-
-        // this.on("end", () => {
-
-        //     console.log("end");
-            
-        //     this.push(null);
-        // })
-    }
-
     subscribe(queue) {
 
         const self = this;
 
         self.channel.consume(queue, function(data) {
-
-            console.log("CONSUMED");
 
             let buffer = Buffer.from(data.content)
 
@@ -94,21 +88,6 @@ class Broker extends Stream.Readable {
             noAck: true
         })
     }
-
-    // subscribe(queue) {
-
-    //     const self = this;
-
-    //     self.channel.consume(queue, function(buffer) {
-
-    //         let message = JSON.parse(buffer.content);
-
-    //         self.emit(process.env.EVENT, message, queue);
-
-    //     }, {
-    //         noAck: true
-    //     })
-    // }
 
     newMsg(key, data) {
 
@@ -146,7 +125,7 @@ class Broker extends Stream.Readable {
                 if(qerror)
                     reject(qerror);
     
-                self.channel.bindQueue(q.queue, process.env.EXCHANGE, key, null, function(binderror, bind) {
+                self.channel.bindQueue(q.queue, config.broker.exchange, key, null, function(binderror, bind) {
     
                     if(binderror)
                         reject(binderror);
@@ -174,4 +153,4 @@ class Broker extends Stream.Readable {
     }
 }
 
-module.exports = new Broker(process.env.TYPE);
+module.exports = new Broker(config.broker.type);

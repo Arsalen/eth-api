@@ -18,7 +18,7 @@ class LoopBack extends Stream.Writable {
 
     _write(data, encoding, cb) {
 
-        console.log("WRITE");
+        // console.log("WRITE");
 
         let message = data.toString()
 
