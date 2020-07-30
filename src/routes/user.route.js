@@ -3,8 +3,10 @@ const router = express.Router();
 
 const settings = require("../settings");
 
+const { sign } = require("../middelwares");
+
 const { userController } = require("../controllers");
 
-router.post(settings.userUrls.authorize, userController.authorize);
+router.post(settings.userUrls.authorize, sign, userController.authorize);
 
 module.exports = router;

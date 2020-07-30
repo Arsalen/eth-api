@@ -4,20 +4,6 @@ const { database } = require("../helpers");
 
 const { broker } = require("../middelwares");
 
-exports.authenticate = (user) => {
-
-    return new Promise((resolve, reject) => {
-
-        database.find({username: user.username, password: user.password})
-            .then(response => {
-                resolve(response);
-            })
-            .catch(error => {
-                reject(error);
-            })
-    })
-}
-
 exports.authorize = (user) => {
 
     return new Promise((resolve, reject) => {

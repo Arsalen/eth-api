@@ -1,10 +1,10 @@
 const { ethereum } = require("../helpers");
 
-const { ForexContract } = require("./contracts");
-const { ForexDescriptor } = require("./descriptors");
+const { AppContract } = require("./contracts");
+const { AppDescriptor } = require("./descriptors");
 
-const forexContract = new ForexContract(ethereum, ForexDescriptor);
+const appContract = new AppContract(ethereum, AppDescriptor);
 
 module.exports = {
-    forexContract
+    appContract
 };

@@ -1,4 +1,4 @@
-class ForexContract {
+module.exports = class AppContract {
 
     constructor(provider, descriptor) {
 
@@ -38,5 +38,3 @@ class ForexContract {
         })
     }
 }
-
-module.exports = ForexContract;

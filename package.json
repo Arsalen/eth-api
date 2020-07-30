@@ -1,5 +1,5 @@
 {
-  "name": "eth-forex-api",
+  "name": "eth-api",
   "version": "1.0.0",
   "description": "",
   "main": "app.js.js",
@@ -9,18 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arsalen/eth-forex-api.git"
+    "url": "git+https://github.com/Arsalen/eth-api.git"
   },
   "keywords": [
     "Ethereum",
-    "Forex"
+    "API"
   ],
   "author": "Arsalen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Arsalen/eth-forex-api/issues"
+    "url": "https://github.com/Arsalen/eth-api/issues"
   },
-  "homepage": "https://github.com/Arsalen/eth-forex-api#readme",
+  "homepage": "https://github.com/Arsalen/eth-api#readme",
   "dependencies": {
     "amqplib": "^0.6.0",
     "cookie-parser": "^1.4.5",

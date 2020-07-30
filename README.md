@@ -1,1 +1,1 @@
-# eth-forex-api
+# eth-api

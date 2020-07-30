@@ -16,7 +16,7 @@ pipeline {
 
             when {
                 expression {
-                    !fileExists("environment") && !fileExists("app.process.js") && !fileExists("config/app.config.json") && !fileExists("key.store.json") && !fileExists("artifacts/Forex.json")
+                    !fileExists("environment") && !fileExists("app.process.js") && !fileExists("config/app.config.json") && !fileExists("key.store.json") && !fileExists("artifacts/App.json")
                 }
             }
 
@@ -27,13 +27,13 @@ pipeline {
                     file (credentialsId: "pm2", variable: "process"),
                     file (credentialsId: "config", variable: "configuration"),
                     file (credentialsId: "key", variable: "keystore"),
-                    file (credentialsId: "dapp", variable: "forex"),
+                    file (credentialsId: "dapp", variable: "contract"),
                 ]) {
                     sh "cp \$environment .env"
                     sh "cp \$process app.process.js"
                     sh "cp \$configuration config/app.config.json"
                     sh "cp \$keystore config/key.store.json"
-                    sh "cp \$forex artifacts/Forex.json"
+                    sh "cp \$contract artifacts/App.json"
                 }
             }
         }

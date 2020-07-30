@@ -4,8 +4,6 @@ const { broker } = require("../middelwares");
 
 exports.insert = (key, transaction) => {
 
-    // console.log(key, transaction)
-
     return new Promise((resolve, reject) => {
 
         broker.newMsg(key, transaction)

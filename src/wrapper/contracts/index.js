@@ -1,1 +1,1 @@
-exports.ForexContract = require("./forex.contract");
+exports.AppContract = require("./app.contract");

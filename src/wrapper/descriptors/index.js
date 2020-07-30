@@ -1,1 +1,1 @@
-exports.ForexDescriptor = require("./forex.descriptor");
+exports.AppDescriptor = require("./app.descriptor");
