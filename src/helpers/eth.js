@@ -16,7 +16,7 @@ class Ethereum {
     
     sign(message) {
 
-        let account = this.web3.eth.accounts.decrypt(keystore, process.env.PASSWORD);
+        let account = this.web3.eth.accounts.decrypt(keystore, process.env.SECRET);
         
         let blob = new Blob({
             from: account.address,

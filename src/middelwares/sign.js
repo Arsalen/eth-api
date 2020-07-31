@@ -1,6 +1,6 @@
 const wrapper = require("../wrapper");
 
-module.exports = (req, res, next) => {
+exports.authorize = (req, res, next) => {
 
     let address = req.body.address;
 

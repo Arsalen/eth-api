@@ -7,6 +7,6 @@ const { sign } = require("../middelwares");
 
 const { userController } = require("../controllers");
 
-router.post(settings.userUrls.authorize, sign, userController.authorize);
+router.post(settings.userUrls.authorize, sign.authorize, userController.authorize);
 
 module.exports = router;
