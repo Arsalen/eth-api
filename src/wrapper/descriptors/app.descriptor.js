@@ -3,9 +3,9 @@ const config = require("../../../config/app.config");
 
 const AppDescriptor = {
     abi: artifact.abi,
-    address: artifact.networks[config.network].address,
-    network: config.network,
-    gasLimit: config.gasLimit,
+    address: artifact.networks[config.blockchain.network].address,
+    network: config.blockchain.network,
+    gasLimit: config.blockchain.gasLimit,
 }
 
 module.exports = AppDescriptor;
