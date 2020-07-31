@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "nedb": "^1.8.0",
     "truffle-hdwallet-provider": "^1.0.17",
-    "web3": "^1.2.11"
+    "web3": "^1.2.11",
+    "winston": "^3.3.3"
   }
 }

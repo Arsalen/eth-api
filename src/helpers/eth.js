@@ -4,31 +4,34 @@ const Web3 = require("web3");
 const config = require("../../config/app.config");
 const keystore = require("../../config/key.store");
 
-const { Transaction, Receipt, Blob } = require("../models");
+const { Account, Transaction, Receipt, Blob } = require("../models");
 
 class Ethereum {
 
-    constructor(_endPoint, _mnemonic) {
+        constructor(_endPoint, _mnemonic) {
 
         this.hd = new HDWalletProvider(_mnemonic, _endPoint);
         this.web3 = new Web3(this.hd);
+
+        this.account = new Account(this.web3, keystore, process.env.SECRET);
     }
     
     sign(message) {
 
-        let account = this.web3.eth.accounts.decrypt(keystore, process.env.SECRET);
+        this.account.nonce++;
         
         let blob = new Blob({
-            from: account.address,
+            from: this.account.id.address,
             to: message.to,
             data: message.data,
             chainId: message.chainId,
             gas: message.gas,
+            nonce: this.account.nonce
         })
 
         return new Promise((resolve, reject) => {
 
-            account.signTransaction(blob)
+            this.account.id.signTransaction(blob)
                 .then(res => {
 
                     let transaction = new Transaction(res);
@@ -47,18 +50,19 @@ class Ethereum {
         
         let raw = transaction.rawTransaction;
 
+console.log("TRANSACTION: ", JSON.stringify(transaction))
+
         return new Promise((resolve, reject) => {
 
             this.web3.eth.sendSignedTransaction(raw)
                 .then(res => {
-
+console.log("RESPONSE: ", JSON.stringify(res))
                     let receipt = new Receipt(res);
                     resolve(receipt);
                 })
                 .catch(err => {
-
-                    let revert = new Receipt(err);
-                    reject(revert);
+console.error("ERROR: ", JSON.stringify(err))
+                    reject(err);
                 })
         })
     }

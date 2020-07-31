@@ -5,3 +5,4 @@ exports.Pair = require("./pair");
 exports.Queue = require("./queue");
 exports.Message = require("./message");
 exports.User = require("./user");
+exports.Account = require("./account");

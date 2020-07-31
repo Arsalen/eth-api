@@ -51,8 +51,6 @@ class Broker extends Stream.Readable {
 
     _read(size) {
 
-        // console.log("READ");
-
         if(!size)
             this.push(null);
     }

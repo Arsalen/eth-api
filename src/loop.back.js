@@ -1,8 +1,8 @@
 const Stream = require("stream");
 
-const { ethereum, database } = require("./helpers");
+const { ethereum } = require("./helpers");
 
-const { broker } = require("./middelwares");
+const { broker, logger } = require("./commons");
 
 class LoopBack extends Stream.Writable {
 
@@ -18,16 +18,19 @@ class LoopBack extends Stream.Writable {
 
     _write(data, encoding, cb) {
 
-        // console.log("WRITE");
+        let message = JSON.parse(data);
 
-        let message = data.toString()
+        ethereum.send(message)
+            .then(onfulfilled => {
 
-        setTimeout(() => {
+                logger.info(onfulfilled);
+                cb();
+            })
+            .catch(onrejected => {
 
-            console.log("[x] received %s", message, "\n");
-            
-            cb();
-        }, 5000);
+                logger.err(onrejected);
+                cb();                
+            })
     }
 }
 

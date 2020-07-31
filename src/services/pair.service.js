@@ -1,6 +1,6 @@
 const { database } = require("../helpers");
 
-const { broker } = require("../middelwares");
+const { broker } = require("../commons");
 
 exports.insert = (key, transaction) => {
 

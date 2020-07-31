@@ -2,7 +2,7 @@ const cuid = require("cuid");
 
 const { database } = require("../helpers");
 
-const { broker } = require("../middelwares");
+const { broker } = require("../commons");
 
 exports.authorize = (user) => {
 
