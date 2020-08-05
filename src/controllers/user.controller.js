@@ -7,12 +7,16 @@ exports.authorize = (req, res) => {
     let user = new User(req.body);
 
     userService.authorize(user)
-        .then(response => {
+        .then(onfulfilled => {
 
-            res.status(200).json({ result: { status: true, description: `Successfully initialized queue, bound to ${JSON.stringify(response)}` }, timestamp: new Date() });
+            let { hash, bind, ...content} = onfulfilled;
+
+            res.status(200).json({ result: { status: true, tx: hash, description: `Successfully submitted message bound to ${bind}` }, timestamp: new Date() });
         })
-        .catch(error => {
-                
-            res.status(400).json({ result: { status: false, description: `Failed to initialize queue, due to ${JSON.stringify(error)}` }, timestamp: new Date() });
+        .catch(onrejected => {
+
+            let { hash, bind, ...content} = onrejected;
+
+            res.status(400).json({ result: { status: false, tx: hash, description: `Failed to submit message bound to ${bind}` }, timestamp: new Date() });
         })
 }

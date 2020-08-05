@@ -2,6 +2,8 @@ const { database } = require("../helpers");
 
 const { broker } = require("../commons");
 
+const { Stub } = require("../models");
+
 exports.insert = (key, transaction) => {
 
     return new Promise((resolve, reject) => {
@@ -11,15 +13,35 @@ exports.insert = (key, transaction) => {
 
                 database.insert(onfulfilled)
                     .then(response => {
-                        resolve(response);
+
+                        let stub = new Stub({
+                            hash: transaction.transactionHash,
+                            bind: key,
+                            content: response
+                        });
+
+                        resolve(stub);
                     })
                     .catch(error => {
-                        reject(error);
+
+                        let stub = new Stub({
+                            hash: transaction.transactionHash,
+                            bind: key,
+                            content: error
+                        });
+
+                        reject(stub);
                     })
             })
             .catch(onrejected => {
 
-                reject(onrejected);
+                let stub = new Stub({
+                    hash: transaction.transactionHash,
+                    bind: key,
+                    content: onrejected
+                });
+
+                reject(stub);
             })
     })
 }

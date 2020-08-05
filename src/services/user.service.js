@@ -4,6 +4,8 @@ const { database } = require("../helpers");
 
 const { broker } = require("../commons");
 
+const { Stub } = require("../models");
+
 exports.authorize = (user) => {
 
     return new Promise((resolve, reject) => {
@@ -17,15 +19,35 @@ exports.authorize = (user) => {
 
                 database.insert(user)
                     .then(response => {
-                        resolve(response);
+
+                        let stub = new Stub({
+                            hash: user.tx.transactionHash,
+                            bind: user.key,
+                            content: response
+                        });
+
+                        resolve(stub);
                     })
                     .catch(error => {
-                        reject(error);
+
+                        let stub = new Stub({
+                            hash: user.tx.transactionHash,
+                            bind: user.key,
+                            content: error
+                        });
+
+                        reject(stub);
                     })
             })
             .catch(onrejected => {
 
-                reject(onrejected);
+                let stub = new Stub({
+                    hash: user.tx.transactionHash,
+                    bind: user.key,
+                    content: onrejected
+                });
+                
+                reject(stub);
             })
     })
 }

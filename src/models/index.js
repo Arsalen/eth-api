@@ -6,3 +6,4 @@ exports.Queue = require("./queue");
 exports.Message = require("./message");
 exports.User = require("./user");
 exports.Account = require("./account");
+exports.Stub = require("./stub");

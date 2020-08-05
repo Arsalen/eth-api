@@ -17,8 +17,6 @@ class Ethereum {
     }
     
     sign(message) {
-
-        this.account.nonce++;
         
         let blob = new Blob({
             from: this.account.id.address,
@@ -28,6 +26,8 @@ class Ethereum {
             gas: message.gas,
             nonce: this.account.nonce
         })
+
+        this.account.nonce++;
 
         return new Promise((resolve, reject) => {
 
@@ -46,8 +46,6 @@ class Ethereum {
 
     send(tx) {
 
-        console.log("TX: ", JSON.stringify(tx))
-
         let transaction = new Transaction(tx);
         
         let raw = transaction.rawTransaction;
@@ -56,12 +54,12 @@ class Ethereum {
             
             this.web3.eth.sendSignedTransaction(raw)
                 .then(res => {
-console.log("RESPONSE: ", JSON.stringify(res))
+
                     let receipt = new Receipt(res);
                     resolve(receipt);
                 })
                 .catch(err => {
-console.error("ERROR: ", err)
+
                     reject(err);
                 })
         })
