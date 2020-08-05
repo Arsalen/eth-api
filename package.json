@@ -27,6 +27,7 @@
     "cors": "^2.8.5",
     "cuid": "^2.1.8",
     "dotenv": "^8.2.0",
+    "ethereum-tx-decoder": "^3.0.0",
     "express": "^4.17.1",
     "nedb": "^1.8.0",
     "truffle-hdwallet-provider": "^1.0.17",

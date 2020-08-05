@@ -46,14 +46,14 @@ class Ethereum {
 
     send(tx) {
 
+        console.log("TX: ", JSON.stringify(tx))
+
         let transaction = new Transaction(tx);
         
         let raw = transaction.rawTransaction;
 
-console.log("TRANSACTION: ", JSON.stringify(transaction))
-
         return new Promise((resolve, reject) => {
-
+            
             this.web3.eth.sendSignedTransaction(raw)
                 .then(res => {
 console.log("RESPONSE: ", JSON.stringify(res))
@@ -61,7 +61,7 @@ console.log("RESPONSE: ", JSON.stringify(res))
                     resolve(receipt);
                 })
                 .catch(err => {
-console.error("ERROR: ", JSON.stringify(err))
+console.error("ERROR: ", err)
                     reject(err);
                 })
         })
