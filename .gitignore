@@ -6,3 +6,4 @@ logs/*.log
 artifacts/*.json
 app.process.js
 db/*.db
+key.store.js
