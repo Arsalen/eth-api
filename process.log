@@ -1,0 +1,10 @@
+pm2 start app.process.js
+[PM2] Spawning PM2 daemon with pm2_home=/var/lib/jenkins/.pm2
+[PM2] PM2 Successfully daemonized
+[PM2] Starting /var/lib/jenkins/workspace/eth-api_master/app.process.js in fork_mode (1 instance)
+[PM2] Done.
+┌─────┬────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name           │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0   │ app.process    │ default     │ 1.0.0   │ fork    │ 18929    │ 0s     │ 0    │ online    │ 0%       │ 28.0mb   │ jenkins  │ disabled │
+└─────┴────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
