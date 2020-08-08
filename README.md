@@ -36,7 +36,7 @@ On a [ubuntu server](https://releases.ubuntu.com/18.04/), install [PM2](https://
 On [Infura](https://infura.io/), setup a new project to connect to ropsten.
 On [MEW](https://www.myetherwallet.com/), generate a wallet through a mnemonic phrase, download keystore file and fund the address with some [fake ether](https://faucet.ropsten.be/).
 
-***PS:*** You can make use of [this role]()https://galaxy.ansible.com/arsalen/rabbitmq to install RabbitMQ.
+***PS:*** You can make use of [this role](https://galaxy.ansible.com/arsalen/rabbitmq) to install RabbitMQ.
 
 ### Configuration
 
